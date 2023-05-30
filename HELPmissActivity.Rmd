@@ -1,6 +1,6 @@
 ---
 title: "HELPmiss (Data Verbs) Activity"
-author: "YOUR NAME HERE"
+author: "Daniel Gao"
 output: html_notebook
 ---
 
@@ -39,6 +39,24 @@ data("HELPmiss", package = "mosaicData")
 - investigate by searching R help documentation
 - there's a research paper cited where additional detail is provided
 
+??Helpmiss
+
+**Who**: Adults inpatients recruited from a detoxification unit. 
+  Included in the experiment. The requirements for these adults were: who spoke Spanish or English, reported alcohol, heroin, or cocaine, as their first or second drug of choice, resided in proximity to the primary care clinic to which they would be referred or were homeless. 
+  
+  Excluded from the experiment. Patients with established primary care relationships they planned to continue, significant dementia, specific plans to leave the Boston area that would prevent research participation, failure to provide contact information for tracking purposes, or pregnancy were excluded.
+
+**What**: Studied patients with no primary care physician 
+
+**When**: Patients were interviewed every 6 months for 2 years
+
+**Where**: at a clinic
+
+**Why**: The goal was to link these patients to primary care
+
+**How**: Each patients were interviewed every 6 months for 2 years. These patients were interviewed on variety of continuous, count, discrete, and survival time predictors and outcomes.
+
+**Case**: Each case represent a patient who spoke Spanish or English, reported alcohol, heroin or cocaine as their first or second drug of choice, resided in proximity to the primary care clinic to which they would be referred or were homeless.
 
 
 ## Task 2: Basic Summaries 
@@ -49,7 +67,7 @@ data("HELPmiss", package = "mosaicData")
 
 ```{r}
 #Your code here 
-
+summarize(HELPmiss)
 ```
 
 2. total number of times in the past 6 months entered a detox program (measured at baseline) for all the people in `HELPmiss`. 
