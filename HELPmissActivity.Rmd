@@ -140,6 +140,18 @@ HELPmiss %>%
 ### substance
 ```{r}
 #Your code here
+HELPmiss %>%
+  group_by(substance) %>%
+  summarise(count = n())
+
+HELPmiss %>%
+  group_by(substance) %>%
+  summarise(sum = sum(cesd, na.rm = TRUE))
+
+HELPmiss %>%
+  group_by(substance) %>%
+  summarise(mean = mean(daysanysub, na.rm = TRUE))
+```
 
 ```
 
