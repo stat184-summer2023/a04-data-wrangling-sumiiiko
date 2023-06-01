@@ -13,7 +13,7 @@ rm(list = ls())     # clean up your R environment
 # load packages
 library(tidyverse)  # includes lots of data verbs like `group_by()` and `summarise()`
 library(mosaicData) # includes the `HELPmiss` data set 
-
+library(esquisse)
 
 # Load the `HELPmiss` data set into our RStudio environment
 data("HELPmiss", package = "mosaicData")
@@ -76,7 +76,7 @@ HELPmiss %>%
 ```{r}
 #Your code here 
 HELPmiss %>%
-  summarise(sum= sum(cesd))
+  summarise(sum = sum(cesd))
 ?summarise
 ```
 
@@ -94,7 +94,7 @@ HELPmiss %>%
 
 ## Task 3: Group Summaries  
 
-*Repeat task 2 above, but add code chunks to calculate result group-by-group according to each prompt (i.e. each promt should have three statements for each of the three prompts in task 2).  Be sure to show all R code and write a sentence or two about what you observe in the results. Remember, you can add multiple statistics inside `summary`.* 
+*Repeat task 2 above, but add code chunks to calculate result group-by-group according to each prompt (i.e. each prompt should have three statements for each of the three prompts in task 2).  Be sure to show all R code and write a sentence or two about what you observe in the results. Remember, you can add multiple statistics inside `summary`.* 
 
 
 - males versus females
@@ -117,9 +117,14 @@ HELPmiss %>%
 HELPmiss %>%
   group_by(sex) %>%
   summarise(mean = mean(daysanysub, na.rm = TRUE))
+
 ```
+In table 1, male patients were 359 and female patients were 111.
+In table 2, the sum of the CESD at baseline for male is 11356 and for female is 4088. 
+In table 3, the mean days to first use of any substance for male is 72.60513 and for female is 83.77193.
 
 ### homeless or not
+  *Observation* : The ratio between the homeless and housed are close in all three categories.
 ```{r}
 #Your code here
 HELPmiss %>%
@@ -134,8 +139,9 @@ HELPmiss %>%
   group_by(homeless) %>%
   summarise(mean = mean(daysanysub, na.rm = TRUE))
 ```
-
-
+In table 1, housed patients were 251 and homeless patients were 219.
+In table 2, the sum of the CESD at baseline for housed is 7985 and for homeless is 7459. 
+In table 3, the mean days to first use of any substance for male is 77.10078 and for female is 73.06504.
 
 ### substance
 ```{r}
@@ -151,35 +157,63 @@ HELPmiss %>%
 HELPmiss %>%
   group_by(substance) %>%
   summarise(mean = mean(daysanysub, na.rm = TRUE))
-```
 
 ```
-
+In table 1, the total usage for each substance were alcohol at 185, cocaine at 156, heroin at 128, and 1 missing. 
+In table 2, the sum of the CESD at baseline for alcohol is 6350, cocaine is 4613, heroin is 4443, and missing is 38. 
+In table 3, the mean days to first use of any substance for alcohol is 78.49495, cocaine is 86.67033, heroin is 52.82258.
 ### homeless versus housed broken down by sex
 ```{r}
-#Your code here
+HELPmiss %>%
+  group_by(homeless, sex) %>%
+  summarise(count = n())
 
+HELPmiss %>%
+  group_by(homeless, sex) %>%
+  summarise(sum = sum(cesd, na.rm = TRUE))
+
+HELPmiss %>%
+  group_by(homeless, sex) %>%
+  summarise(mean = mean(daysanysub, na.rm = TRUE))
 ```
+In table 1, for the patients who were housed, there were 182 males and 69 females. For the patients who were homeless, there were 177 males and 42 females. 
+In table 2, the sum of the CESD at baseline for those who were housed, males had a sum of 5513 and females had a sum of 2472. For the homeless, males had a sum of 5843 and females had a sum of 1616. 
+In table 3, the mean days to first use of any substance for alcohol housed, males had a mean of 74.30851 and females had a mean of 84.60000. For those who were homeless, males had a mean of 71.01980, and females had a mean of 82.45455.
 
 ### homeless versus housed broken down by substance
 ```{r}
 #Your code here
+HELPmiss %>%
+  group_by(homeless,substance) %>%
+  summarise(count = n())
 
+HELPmiss %>%
+  group_by(homeless,substance) %>%
+  summarise(sum = sum(cesd, na.rm = TRUE))
+
+HELPmiss %>%
+  group_by(homeless,substance) %>%
+  summarise(mean = mean(daysanysub, na.rm = TRUE))
 ```
-
+In table 1, the primary substance used for those who were housed, 76 used alcohol, 96 used cocaine, and 79 used heroin. The primary substance used for those who were homeless, 109 used alcohol, 60 used cocaine, 49 used heroin, and 1 was missing.
 
 
 ## Task 4: Data Visualization & Observations
 
-*Include one or more interesting plots from this data set involving at least 3 variables per plot. Write a few sentences to explain the story that your plot tells about these data.  You can expand on the relationships that you studied in Task 2, or you can explore a different group of variables in `HELPmiss` that show something interesting. Remember to use the interactive commands in the console, generate the R commands that will reproduce your plot, and then paste the R commands into an R chunk in the RMarkdown file.*  
+*Include one or more interesting plots from this data set involving at least 3 variables per plot. Write a few sentences to explain the story that your plot tells about these data. You can expand on the relationships that you studied in Task 2, or you can explore a different group of variables in `HELPmiss` that show something interesting. Remember to use the interactive commands in the console, generate the R commands that will reproduce your plot, and then paste the R commands into an R chunk in the RMarkdown file.*  
 
 *Remember, you can use* `esquisser` *or* `mplot` *in your console. But only include the ggplot code in this Rmd document.*
 
 
 ```{r}
 # Your Code here.
-
+esquisser(HELPmiss)
+ggplot(HELPmiss) +
+  aes(x = age, y = substance) +
+  geom_boxplot(fill = "#112446") +
+  theme_minimal() +
+  facet_wrap(vars(homeless))
 ```
-
-
+*Result* 
+This graph shows the usages of each substance (alcohol, cocaine, and heroin) for each age and if these individuals are housed or homeless. The facets created to compare the primary susbtance used for each individual for those who are housed and those who are homeless. 
 
